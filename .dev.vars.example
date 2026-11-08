@@ -1,0 +1,6 @@
+# Optional: delivery of leads from the contact form
+TELEGRAM_BOT_TOKEN=""
+TELEGRAM_CHAT_ID=""
+
+# Optional alternative: any endpoint accepting a JSON POST body
+LEAD_WEBHOOK_URL=""

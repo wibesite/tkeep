@@ -1,0 +1,19 @@
+{
+  "name": "tkeep-agency",
+  "version": "1.0.0",
+  "private": true,
+  "description": "TKEEP digital and AI agency website for Cloudflare Workers",
+  "type": "module",
+  "engines": {
+    "node": ">=20 <26"
+  },
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "check": "wrangler deploy --dry-run",
+    "types": "wrangler types"
+  },
+  "devDependencies": {
+    "wrangler": "^4.158.0"
+  }
+}

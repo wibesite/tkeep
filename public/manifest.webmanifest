@@ -1,0 +1,17 @@
+{
+  "name": "TKEEP — веб-разработка и AI",
+  "short_name": "TKEEP",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f1efe7",
+  "theme_color": "#111411",
+  "lang": "ru",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
