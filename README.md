@@ -86,21 +86,15 @@ npx wrangler secret put ADMIN_SESSION_SECRET
 
 ### Подключение D1
 
-1. Создайте базу:
+Production-база `tkeep-leads` уже подключена к Worker через binding `DB` в `wrangler.toml`.
 
-```bash
-npx wrangler d1 create tkeep-leads
-```
-
-2. Скопируйте выданный `database_id` и добавьте блок из `wrangler.d1.example.toml` в конец `wrangler.toml`.
-
-3. Примените схему:
+Для ручного применения схемы:
 
 ```bash
 npm run db:remote
 ```
 
-4. Задеплойте Worker:
+Обычный деплой сам применяет все новые миграции перед публикацией Worker:
 
 ```bash
 npm run deploy

@@ -20,3 +20,9 @@ html_handling = "auto-trailing-slash"
 
 [observability]
 enabled = true
+
+[[d1_databases]]
+binding = "DB"
+database_name = "tkeep-leads"
+database_id = "7e56a43e-1de0-4de5-aad8-b771b19c46a4"
+migrations_dir = "migrations"
