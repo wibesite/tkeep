@@ -1,65 +1,53 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920">
   <defs>
-    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#111411;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#1b201b;stop-opacity:1" />
-    </linearGradient>
-    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-      <feGaussianBlur stdDeviation="25" result="blur" />
-      <feComposite in="SourceGraphic" in2="blur" operator="over" />
-    </filter>
+    <style><![CDATA[
+      @font-face { font-family: Manrope; src: url('../assets/manrope.ttf') format('truetype'); font-weight: 200 800; }
+      text { font-family: Manrope, sans-serif; }
+    ]]></style>
+    <clipPath id="screen"><rect x="106" y="754" width="760" height="430" rx="18"/></clipPath>
   </defs>
 
-  <!-- Background -->
-  <rect width="1080" height="1920" fill="url(#grad1)" />
+  <rect width="1080" height="1920" fill="#101310"/>
+  <path d="M72 182H900M72 1696H900" stroke="#2b312c"/>
+  <path d="M72 182V1696M900 182V1696" stroke="#1c211d"/>
 
-  <!-- Decorative circles -->
-  <circle cx="880" cy="320" r="220" fill="#d8e2b6" opacity="0.10" filter="url(#glow)" />
-  <circle cx="200" cy="1580" r="300" fill="#83a977" opacity="0.08" filter="url(#glow)" />
-  <circle cx="920" cy="1700" r="140" fill="#e4e8cf" opacity="0.06" filter="url(#glow)" />
+  <text x="72" y="126" fill="#eceede" font-size="42" font-weight="800" letter-spacing="-2">tkeep<tspan fill="#d8e2b6">.</tspan></text>
+  <text x="900" y="124" fill="#7f887e" font-size="18" font-weight="700" text-anchor="end" letter-spacing="2">PROMO / 01</text>
 
-  <!-- Safe zone top/bottom hints (optional, can be removed) -->
-  <rect x="0" y="0" width="1080" height="200" fill="#000000" opacity="0.30" />
-  <rect x="0" y="1720" width="1080" height="200" fill="#000000" opacity="0.30" />
+  <text x="72" y="270" fill="#83a977" font-size="20" font-weight="800" letter-spacing="4">ЛЕНДИНГ</text>
+  <text x="72" y="382" fill="#eceede" font-size="84" font-weight="650" letter-spacing="-4">Одна страница.</text>
+  <text x="72" y="478" fill="#eceede" font-size="84" font-weight="650" letter-spacing="-4">Одна задача.</text>
+  <text x="72" y="574" fill="#d8e2b6" font-size="84" font-weight="650" letter-spacing="-4">Понятный путь.</text>
+  <text x="72" y="640" fill="#939b91" font-size="27" font-weight="500">Структура · дизайн · адаптив · форма заявки</text>
 
-  <!-- Logo -->
-  <text x="60" y="120" font-family="Inter, sans-serif" font-size="42" font-weight="800" fill="#ffffff" letter-spacing="-0.02em">TKEEP<span fill="#d8e2b6">.</span></text>
+  <rect x="72" y="720" width="828" height="500" rx="26" fill="#d8e2b6"/>
+  <rect x="106" y="754" width="760" height="430" rx="18" fill="#f0f1e5"/>
+  <g clip-path="url(#screen)">
+    <rect x="106" y="754" width="760" height="56" fill="#1a1f1a"/>
+    <circle cx="139" cy="782" r="6" fill="#d8e2b6"/>
+    <circle cx="163" cy="782" r="6" fill="#83a977"/>
+    <text x="193" y="789" fill="#879086" font-size="15" font-weight="700">ваш-проект.by</text>
+    <text x="146" y="897" fill="#171b17" font-size="16" font-weight="800" letter-spacing="2">НОВЫЙ ПРОДУКТ</text>
+    <text x="146" y="958" fill="#171b17" font-size="48" font-weight="700" letter-spacing="-2">Объясняет ценность</text>
+    <text x="146" y="1013" fill="#171b17" font-size="48" font-weight="700" letter-spacing="-2">за один экран.</text>
+    <text x="146" y="1060" fill="#6f766d" font-size="20" font-weight="500">Без шаблонных фраз и лишних переходов.</text>
+    <rect x="146" y="1093" width="210" height="58" rx="10" fill="#171b17"/>
+    <text x="174" y="1130" fill="#eceede" font-size="18" font-weight="750">Оставить заявку →</text>
+    <rect x="635" y="852" width="255" height="330" rx="128" fill="#83a977" opacity=".34"/>
+    <circle cx="762" cy="1017" r="76" fill="#1a1f1a"/>
+    <text x="762" y="1031" fill="#d8e2b6" font-size="30" font-weight="800" text-anchor="middle">01</text>
+  </g>
 
-  <!-- Hook -->
-  <text x="60" y="520" font-family="Inter, sans-serif" font-size="78" font-weight="900" fill="#ffffff" line-height="1.05" letter-spacing="-0.03em">
-    Сайт за 100<span fill="#d8e2b6"> BYN</span>?
-  </text>
-  <text x="60" y="610" font-family="Inter, sans-serif" font-size="78" font-weight="900" fill="#d8e2b6" line-height="1.05" letter-spacing="-0.03em">
-    Да, лендинг под ключ.
-  </text>
+  <text x="72" y="1315" fill="#7f887e" font-size="18" font-weight="800" letter-spacing="3">СТАРТ ОТ</text>
+  <text x="72" y="1425" fill="#eceede" font-size="112" font-weight="700" letter-spacing="-6">100</text>
+  <text x="302" y="1423" fill="#d8e2b6" font-size="48" font-weight="750">BYN</text>
+  <text x="574" y="1360" fill="#a5aca2" font-size="22" font-weight="600">В стоимость входит</text>
+  <text x="574" y="1407" fill="#eceede" font-size="25" font-weight="650">дизайн + разработка</text>
+  <text x="574" y="1446" fill="#eceede" font-size="25" font-weight="650">адаптив + форма</text>
 
-  <!-- Sub -->
-  <text x="60" y="700" font-family="Inter, sans-serif" font-size="34" font-weight="500" fill="#b9ca83" line-height="1.4">
-    Посадочная страница, адаптив, форма заявки — запуск за 2–3 недели.
-  </text>
-
-  <!-- Price card -->
-  <rect x="60" y="820" width="960" height="340" rx="32" fill="#1b201b" stroke="#d8e2b6" stroke-width="2" />
-  <text x="120" y="900" font-family="Inter, sans-serif" font-size="36" font-weight="700" fill="#ffffff">Цена</text>
-  <text x="120" y="980" font-family="Inter, sans-serif" font-size="110" font-weight="900" fill="#d8e2b6" letter-spacing="-0.04em">от 100</text>
-  <text x="640" y="980" font-family="Inter, sans-serif" font-size="46" font-weight="700" fill="#b9ca83">BYN</text>
-
-  <!-- Divider -->
-  <line x1="120" y1="1060" x2="900" y2="1060" stroke="#333a32" stroke-width="1" />
-
-  <!-- Features -->
-  <text x="120" y="1130" font-family="Inter, sans-serif" font-size="30" font-weight="700" fill="#ffffff">Что внутри:</text>
-  <text x="120" y="1180" font-family="Inter, sans-serif" font-size="26" font-weight="400" fill="#b9ca83">• Дизайн и вёрстка под ключ</text>
-  <text x="120" y="1230" font-family="Inter, sans-serif" font-size="26" font-weight="400" fill="#b9ca83">• Адаптив и формы заявок</text>
-  <text x="120" y="1280" font-family="Inter, sans-serif" font-size="26" font-weight="400" fill="#b9ca83">• Запуск за 2–3 недели</text>
-
-  <!-- CTA -->
-  <rect x="60" y="1420" width="960" height="140" rx="22" fill="#d8e2b6" />
-  <text x="160" y="1510" font-family="Inter, sans-serif" font-size="40" font-weight="800" fill="#111411">Обсучить лендинг →</text>
-  <text x="700" y="1510" font-family="Inter, sans-serif" font-size="32" font-weight="600" fill="#111411">t.me/tkeepru</text>
-
-  <!-- Footer -->
-  <text x="60" y="1820" font-family="Inter, sans-serif" font-size="24" font-weight="600" fill="#8a9289">hello@tkeep.ru</text>
-  <text x="560" y="1820" font-family="Inter, sans-serif" font-size="24" font-weight="600" fill="#8a9289">tkeep.ru</text>
-  <text x="860" y="1820" font-family="Inter, sans-serif" font-size="24" font-weight="600" fill="#8a9289">Ссылка в био</text>
+  <path d="M72 1510H900" stroke="#384038"/>
+  <text x="72" y="1596" fill="#eceede" font-size="34" font-weight="700">Обсудить проект</text>
+  <text x="900" y="1596" fill="#d8e2b6" font-size="34" font-weight="750" text-anchor="end">@tkeepru ↗</text>
+  <text x="72" y="1760" fill="#737b72" font-size="20" font-weight="650">tkeep.ru</text>
+  <text x="900" y="1760" fill="#737b72" font-size="20" font-weight="650" text-anchor="end">01 — 05</text>
 </svg>

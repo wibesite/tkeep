@@ -1,52 +1,67 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920">
   <defs>
-    <linearGradient id="grad4" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#111411;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#1b201b;stop-opacity:1" />
-    </linearGradient>
-    <filter id="glow4" x="-50%" y="-50%" width="200%" height="200%">
-      <feGaussianBlur stdDeviation="26" result="blur" />
-      <feComposite in="SourceGraphic" in2="blur" operator="over" />
-    </filter>
+    <style><![CDATA[
+      @font-face { font-family: Manrope; src: url('../assets/manrope.ttf') format('truetype'); font-weight: 200 800; }
+      text { font-family: Manrope, sans-serif; }
+    ]]></style>
+    <clipPath id="shop"><rect x="72" y="710" width="828" height="548" rx="26"/></clipPath>
   </defs>
 
-  <rect width="1080" height="1920" fill="url(#grad4)" />
-  <circle cx="880" cy="420" r="280" fill="#83a977" opacity="0.10" filter="url(#glow4)" />
-  <circle cx="240" cy="1580" r="360" fill="#d8e2b6" opacity="0.07" filter="url(#glow4)" />
+  <rect width="1080" height="1920" fill="#101310"/>
+  <path d="M72 182H900M72 1696H900" stroke="#2b312c"/>
+  <path d="M72 182V1696M900 182V1696" stroke="#1c211d"/>
 
-  <rect x="0" y="0" width="1080" height="200" fill="#000000" opacity="0.30" />
-  <rect x="0" y="1720" width="1080" height="200" fill="#000000" opacity="0.30" />
+  <text x="72" y="126" fill="#eceede" font-size="42" font-weight="800" letter-spacing="-2">tkeep<tspan fill="#d8e2b6">.</tspan></text>
+  <text x="900" y="124" fill="#7f887e" font-size="18" font-weight="700" text-anchor="end" letter-spacing="2">PROMO / 04</text>
 
-  <text x="60" y="120" font-family="Inter, sans-serif" font-size="42" font-weight="800" fill="#ffffff" letter-spacing="-0.02em">TKEEP<span fill="#83a977">.</span></text>
+  <text x="72" y="270" fill="#83a977" font-size="20" font-weight="800" letter-spacing="4">E-COMMERCE</text>
+  <text x="72" y="382" fill="#eceede" font-size="84" font-weight="650" letter-spacing="-4">До оплаты —</text>
+  <text x="72" y="478" fill="#eceede" font-size="84" font-weight="650" letter-spacing="-4">без лишних</text>
+  <text x="72" y="574" fill="#d8e2b6" font-size="84" font-weight="650" letter-spacing="-4">экранов.</text>
+  <text x="72" y="640" fill="#939b91" font-size="27" font-weight="500">Каталог · корзина · оплата · доставка · учёт</text>
 
-  <text x="60" y="520" font-family="Inter, sans-serif" font-size="76" font-weight="900" fill="#ffffff" line-height="1.05" letter-spacing="-0.03em">
-    Интернет-магазин от
-  </text>
-  <text x="60" y="620" font-family="Inter, sans-serif" font-size="76" font-weight="900" fill="#d8e2b6" line-height="1.05" letter-spacing="-0.03em">
-    1 000 BYN.
-  </text>
+  <rect x="72" y="710" width="828" height="548" rx="26" fill="#eceede"/>
+  <g clip-path="url(#shop)">
+    <rect x="72" y="710" width="828" height="72" fill="#171c17"/>
+    <text x="110" y="755" fill="#eceede" font-size="22" font-weight="800" letter-spacing="-1">NORTH / OBJECTS</text>
+    <text x="862" y="754" fill="#d8e2b6" font-size="15" font-weight="800" text-anchor="end">КОРЗИНА 2</text>
 
-  <text x="60" y="710" font-family="Inter, sans-serif" font-size="32" font-weight="500" fill="#b9ca83" line-height="1.4">
-    Каталог, корзина, оплата, доставка — первые заказы уже через неделю после запуска.
-  </text>
+    <rect x="108" y="824" width="224" height="254" rx="14" fill="#d8e2b6"/>
+    <circle cx="220" cy="925" r="70" fill="#83a977" opacity=".7"/>
+    <rect x="165" y="900" width="110" height="82" rx="18" fill="#171c17"/>
+    <text x="108" y="1115" fill="#171c17" font-size="20" font-weight="750">Form chair</text>
+    <text x="108" y="1147" fill="#687066" font-size="17" font-weight="650">280 BYN</text>
 
-  <rect x="60" y="820" width="960" height="340" rx="32" fill="#1b201b" stroke="#83a977" stroke-width="2" />
-  <text x="120" y="900" font-family="Inter, sans-serif" font-size="36" font-weight="700" fill="#ffffff">Цена</text>
-  <text x="120" y="980" font-family="Inter, sans-serif" font-size="108" font-weight="900" fill="#d8e2b6" letter-spacing="-0.04em">от 1 000</text>
-  <text x="720" y="980" font-family="Inter, sans-serif" font-size="46" font-weight="700" fill="#b9ca83">BYN</text>
+    <rect x="356" y="824" width="224" height="254" rx="14" fill="#d9ddd0"/>
+    <circle cx="468" cy="925" r="70" fill="#b8c1ae"/>
+    <rect x="423" y="870" width="90" height="110" rx="45" fill="#f4f4e9"/>
+    <text x="356" y="1115" fill="#171c17" font-size="20" font-weight="750">Arc lamp</text>
+    <text x="356" y="1147" fill="#687066" font-size="17" font-weight="650">190 BYN</text>
 
-  <line x1="120" y1="1060" x2="900" y2="1060" stroke="#333a32" stroke-width="1" />
+    <rect x="614" y="822" width="250" height="382" rx="18" fill="#171c17"/>
+    <text x="640" y="865" fill="#8f988e" font-size="15" font-weight="800" letter-spacing="2">ВАШ ЗАКАЗ</text>
+    <text x="640" y="916" fill="#eceede" font-size="18" font-weight="650">Form chair × 1</text>
+    <text x="838" y="916" fill="#eceede" font-size="18" font-weight="750" text-anchor="end">280</text>
+    <text x="640" y="958" fill="#eceede" font-size="18" font-weight="650">Arc lamp × 1</text>
+    <text x="838" y="958" fill="#eceede" font-size="18" font-weight="750" text-anchor="end">190</text>
+    <path d="M640 990H838" stroke="#353c35"/>
+    <text x="640" y="1034" fill="#a4aca1" font-size="16" font-weight="650">Итого</text>
+    <text x="838" y="1034" fill="#d8e2b6" font-size="24" font-weight="800" text-anchor="end">470 BYN</text>
+    <rect x="640" y="1074" width="198" height="62" rx="10" fill="#d8e2b6"/>
+    <text x="739" y="1113" fill="#171c17" font-size="17" font-weight="800" text-anchor="middle">Перейти к оплате</text>
+    <text x="640" y="1172" fill="#778077" font-size="14" font-weight="650">Доставка рассчитана</text>
+  </g>
 
-  <text x="120" y="1130" font-family="Inter, sans-serif" font-size="30" font-weight="700" fill="#ffffff">Что входит:</text>
-  <text x="120" y="1180" font-family="Inter, sans-serif" font-size="26" font-weight="400" fill="#b9ca83">• Каталог и фильтры</text>
-  <text x="120" y="1230" font-family="Inter, sans-serif" font-size="26" font-weight="400" fill="#b9ca83">• Корзина и оплата</text>
-  <text x="120" y="1280" font-family="Inter, sans-serif" font-size="26" font-weight="400" fill="#b9ca83">• Интеграция с учётной системой</text>
+  <text x="72" y="1350" fill="#7f887e" font-size="18" font-weight="800" letter-spacing="3">СТАРТ ОТ</text>
+  <text x="72" y="1460" fill="#eceede" font-size="108" font-weight="700" letter-spacing="-6">1 000</text>
+  <text x="390" y="1458" fill="#d8e2b6" font-size="48" font-weight="750">BYN</text>
+  <text x="610" y="1387" fill="#a5aca2" font-size="22" font-weight="600">Магазин под задачу</text>
+  <text x="610" y="1433" fill="#eceede" font-size="25" font-weight="650">сценарий покупки</text>
+  <text x="610" y="1472" fill="#eceede" font-size="25" font-weight="650">интеграции + оплата</text>
 
-  <rect x="60" y="1420" width="960" height="140" rx="22" fill="#83a977" />
-  <text x="160" y="1510" font-family="Inter, sans-serif" font-size="40" font-weight="800" fill="#111411">Открыть магазин →</text>
-  <text x="700" y="1510" font-family="Inter, sans-serif" font-size="32" font-weight="600" fill="#111411">t.me/tkeepru</text>
-
-  <text x="60" y="1820" font-family="Inter, sans-serif" font-size="24" font-weight="600" fill="#8a9289">hello@tkeep.ru</text>
-  <text x="560" y="1820" font-family="Inter, sans-serif" font-size="24" font-weight="600" fill="#8a9289">tkeep.ru</text>
-  <text x="860" y="1820" font-family="Inter, sans-serif" font-size="24" font-weight="600" fill="#8a9289">Ссылка в био</text>
+  <path d="M72 1530H900" stroke="#384038"/>
+  <text x="72" y="1610" fill="#eceede" font-size="34" font-weight="700">Обсудить магазин</text>
+  <text x="900" y="1610" fill="#d8e2b6" font-size="34" font-weight="750" text-anchor="end">@tkeepru ↗</text>
+  <text x="72" y="1760" fill="#737b72" font-size="20" font-weight="650">tkeep.ru</text>
+  <text x="900" y="1760" fill="#737b72" font-size="20" font-weight="650" text-anchor="end">04 — 05</text>
 </svg>

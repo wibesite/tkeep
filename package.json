@@ -14,11 +14,13 @@
     "db:remote": "wrangler d1 migrations apply tkeep-leads --remote",
     "test:admin": "node scripts/smoke-admin.mjs",
     "test:pricing": "node --test scripts/pricing.test.mjs scripts/leads.test.mjs",
+    "promo:render": "node scripts/render-tiktok.mjs",
     "deploy": "wrangler d1 migrations apply tkeep-leads --remote && wrangler deploy",
     "check": "wrangler deploy --dry-run",
     "types": "wrangler types"
   },
   "devDependencies": {
+    "sharp": "^0.35.5",
     "wrangler": "^4.158.0"
   }
 }
