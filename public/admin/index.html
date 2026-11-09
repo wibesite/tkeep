@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="robots" content="noindex, nofollow, noarchive" />
+    <meta name="theme-color" content="#111411" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preload" href="/assets/manrope.ttf" as="font" type="font/ttf" crossorigin />
+    <link rel="stylesheet" href="/admin/admin.css" />
+    <title>Заявки — TKEEP Admin</title>
+  </head>
+  <body>
+    <section class="login-screen" id="login-screen">
+      <div class="login-orbit" aria-hidden="true"><i></i><i></i><i></i></div>
+      <form class="login-card" id="login-form">
+        <a class="login-brand" href="/">tkeep<span>.</span></a>
+        <p class="overline">Закрытая зона</p>
+        <h1>Управление<br />заявками.</h1>
+        <p class="login-copy">Введите пароль администратора, чтобы открыть CRM.</p>
+        <label for="admin-password">Пароль</label>
+        <div class="password-field">
+          <input id="admin-password" name="password" type="password" required autocomplete="current-password" placeholder="Введите пароль" />
+          <button class="password-toggle" type="button" aria-label="Показать пароль">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z"/><circle cx="12" cy="12" r="2.7"/></svg>
+          </button>
+        </div>
+        <button class="login-submit" type="submit"><span>Войти</span><i>↗</i></button>
+        <p class="login-status" id="login-status" role="status" aria-live="polite"></p>
+        <a class="back-link" href="/">← Вернуться на сайт</a>
+      </form>
+    </section>
+
+    <div class="admin-app" id="admin-app" hidden>
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar-top">
+          <a class="admin-brand" href="/admin">tkeep<span>.</span><small>admin</small></a>
+          <button class="sidebar-close" type="button" aria-label="Закрыть меню">×</button>
+        </div>
+        <nav class="status-nav" aria-label="Фильтр заявок">
+          <button class="active" type="button" data-status="all"><span><i class="nav-dot all-dot"></i>Все заявки</span><b id="nav-total">0</b></button>
+          <button type="button" data-status="new"><span><i class="nav-dot new-dot"></i>Новые</span><b id="nav-new">0</b></button>
+          <button type="button" data-status="in_progress"><span><i class="nav-dot progress-dot"></i>В работе</span><b id="nav-progress">0</b></button>
+          <button type="button" data-status="won"><span><i class="nav-dot won-dot"></i>Успешные</span><b id="nav-won">0</b></button>
+          <button type="button" data-status="closed"><span><i class="nav-dot closed-dot"></i>Закрытые</span><b id="nav-closed">0</b></button>
+        </nav>
+        <div class="sidebar-note">
+          <span>Система</span>
+          <p><i></i> Worker онлайн</p>
+          <small id="database-state">Проверяем D1…</small>
+        </div>
+        <div class="sidebar-bottom">
+          <a href="/" target="_blank" rel="noopener">Открыть сайт <span>↗</span></a>
+          <button id="logout-button" type="button">Выйти <span>→</span></button>
+        </div>
+      </aside>
+
+      <main class="admin-main">
+        <header class="admin-header">
+          <button class="menu-button" id="admin-menu-button" type="button" aria-label="Открыть меню"><span></span><span></span></button>
+          <div>
+            <p class="overline">TKEEP / CRM</p>
+            <h1>Заявки</h1>
+          </div>
+          <div class="admin-user">
+            <span class="user-avatar">A</span>
+            <div><strong>Администратор</strong><small id="admin-email">admin@tkeep.ru</small></div>
+          </div>
+        </header>
+
+        <section class="setup-notice" id="setup-notice" hidden>
+          <div class="setup-icon">DB</div>
+          <div><strong>Подключите базу D1</strong><p>Интерфейс готов, но binding <code>DB</code> ещё не настроен. Создайте базу <code>tkeep-leads</code>, добавьте её ID в Wrangler и примените миграции.</p></div>
+        </section>
+
+        <section class="stats-grid" aria-label="Статистика заявок">
+          <article class="stat-card"><span>Всего</span><strong id="stat-total">0</strong><small>за всё время</small><i>01</i></article>
+          <article class="stat-card accent"><span>Новые</span><strong id="stat-new">0</strong><small>ждут ответа</small><i>02</i></article>
+          <article class="stat-card"><span>В работе</span><strong id="stat-progress">0</strong><small>активные диалоги</small><i>03</i></article>
+          <article class="stat-card"><span>Сегодня</span><strong id="stat-today">0</strong><small>новых обращений</small><i>04</i></article>
+        </section>
+
+        <section class="leads-section">
+          <div class="section-bar">
+            <div>
+              <h2 id="list-title">Все заявки</h2>
+              <span id="list-count">0 записей</span>
+            </div>
+            <div class="section-actions">
+              <label class="search-box">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+                <input id="search-input" type="search" autocomplete="off" placeholder="Поиск по имени, контакту или задаче" />
+                <kbd>⌘ K</kbd>
+              </label>
+              <a class="tool-button" id="export-button" href="/api/admin/export" download>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 20h14"/></svg>
+                <span>CSV</span>
+              </a>
+              <button class="tool-button" id="refresh-button" type="button" aria-label="Обновить">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6v5h-5M4 18v-5h5"/><path d="M18.5 9A7 7 0 0 0 6.3 6.3L4 9m16 6-2.3 2.7A7 7 0 0 1 5.5 15"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="leads-table-wrap">
+            <table class="leads-table">
+              <thead><tr><th>Клиент</th><th>Задача</th><th>Бюджет</th><th>Дата</th><th>Статус</th><th></th></tr></thead>
+              <tbody id="leads-body"></tbody>
+            </table>
+            <div class="loading-state" id="loading-state"><i></i><p>Загружаем заявки…</p></div>
+            <div class="empty-state" id="empty-state" hidden><span>0</span><h3>Здесь пока пусто</h3><p>Новые заявки с сайта появятся в этом списке.</p></div>
+          </div>
+
+          <div class="pagination" id="pagination">
+            <button id="prev-page" type="button">← Назад</button>
+            <span id="page-label">Страница 1 из 1</span>
+            <button id="next-page" type="button">Вперёд →</button>
+          </div>
+        </section>
+      </main>
+
+      <div class="drawer-backdrop" id="drawer-backdrop"></div>
+      <aside class="lead-drawer" id="lead-drawer" aria-hidden="true" aria-labelledby="drawer-name">
+        <header class="drawer-header">
+          <div><span class="overline">Карточка заявки</span><small id="drawer-id"></small></div>
+          <button id="drawer-close" type="button" aria-label="Закрыть">×</button>
+        </header>
+        <div class="drawer-content">
+          <div class="client-head"><span class="client-avatar" id="drawer-avatar">T</span><div><h2 id="drawer-name"></h2><button id="copy-contact" type="button"><span id="drawer-contact"></span><i>Копировать</i></button></div></div>
+          <div class="drawer-meta"><div><span>Создана</span><strong id="drawer-created"></strong></div><div><span>Оценка</span><strong id="drawer-estimate"></strong></div><div><span>Источник</span><strong id="drawer-source"></strong></div><div><span>Страна</span><strong id="drawer-country"></strong></div></div>
+          <section class="drawer-section"><span>Задача</span><p id="drawer-task"></p></section>
+          <section class="drawer-section"><span>Продукт</span><div class="project-tags" id="drawer-tags"></div></section>
+          <label class="drawer-field">Статус<select id="drawer-status"><option value="new">Новая</option><option value="in_progress">В работе</option><option value="won">Успешная</option><option value="closed">Закрыта</option></select></label>
+          <label class="drawer-field">Заметки<textarea id="drawer-notes" rows="6" placeholder="Добавьте договорённости, следующий шаг или важный контекст…"></textarea></label>
+          <small class="updated-note" id="updated-note"></small>
+        </div>
+        <footer class="drawer-footer"><button class="delete-button" id="delete-button" type="button">Удалить</button><button class="save-button" id="save-button" type="button"><span>Сохранить</span><i>✓</i></button></footer>
+      </aside>
+    </div>
+
+    <div class="toast" id="admin-toast" role="status" aria-live="polite"><i>✓</i><span></span></div>
+    <script src="/admin/admin.js" type="module"></script>
+  </body>
+</html>

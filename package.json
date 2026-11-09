@@ -8,7 +8,11 @@
     "node": ">=20 <26"
   },
   "scripts": {
-    "dev": "wrangler dev",
+    "dev": "wrangler dev --config wrangler.local.toml",
+    "dev:base": "wrangler dev",
+    "db:local": "wrangler d1 migrations apply tkeep-leads --local --config wrangler.local.toml",
+    "db:remote": "wrangler d1 migrations apply tkeep-leads --remote",
+    "test:admin": "node scripts/smoke-admin.mjs",
     "deploy": "wrangler deploy",
     "check": "wrangler deploy --dry-run",
     "types": "wrangler types"

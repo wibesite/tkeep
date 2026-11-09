@@ -1,0 +1,8 @@
+# Add this block to wrangler.toml after creating the production D1 database.
+# Replace the placeholder with the database ID shown by Cloudflare.
+
+[[d1_databases]]
+binding = "DB"
+database_name = "tkeep-leads"
+database_id = "REPLACE_WITH_D1_DATABASE_ID"
+migrations_dir = "migrations"

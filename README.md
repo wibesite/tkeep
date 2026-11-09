@@ -11,6 +11,8 @@
 - кейсы, процесс, тарифы и FAQ;
 - интерактивный калькулятор;
 - форма заявки с доставкой в Telegram или произвольный webhook;
+- защищённая админка заявок на `/admin`;
+- хранение заявок в Cloudflare D1, статусы, заметки и CSV-экспорт;
 - адаптивная мобильная версия;
 - security headers и CSP на уровне Worker.
 
@@ -30,6 +32,15 @@ npm run dev
 ```
 
 Wrangler поднимет сайт и Worker API, обычно на `http://localhost:8787`.
+
+Перед первым локальным запуском примените D1-миграции:
+
+```bash
+cp .dev.vars.example .dev.vars
+# Заполните ADMIN_PASSWORD и ADMIN_SESSION_SECRET в .dev.vars
+npm run db:local
+npm run dev
+```
 
 Проверка сборки без публикации:
 
@@ -55,6 +66,47 @@ npx wrangler secret put LEAD_WEBHOOK_URL
 ```
 
 Если канал доставки не настроен, форма работает в preview-режиме и заявка выводится в лог Worker — это явно сообщается пользователю.
+
+## Админка заявок
+
+Панель открывается по адресу:
+
+```text
+https://tkeep.ru/admin
+```
+
+Пароль не хранится в GitHub. Добавьте его как зашифрованный Worker Secret:
+
+```bash
+npx wrangler secret put ADMIN_PASSWORD
+npx wrangler secret put ADMIN_SESSION_SECRET
+```
+
+`ADMIN_SESSION_SECRET` — случайная строка длиной от 32 символов. Она используется для подписи HttpOnly-сессии. После пяти неверных попыток вход временно блокируется.
+
+### Подключение D1
+
+1. Создайте базу:
+
+```bash
+npx wrangler d1 create tkeep-leads
+```
+
+2. Скопируйте выданный `database_id` и добавьте блок из `wrangler.d1.example.toml` в конец `wrangler.toml`.
+
+3. Примените схему:
+
+```bash
+npm run db:remote
+```
+
+4. Задеплойте Worker:
+
+```bash
+npm run deploy
+```
+
+После подключения D1 каждая заявка сохраняется независимо от Telegram/webhook. В `/admin` доступны поиск, фильтры, статусы «Новая / В работе / Успешная / Закрыта», заметки, удаление и CSV-экспорт.
 
 ## Публикация на tkeep.ru
 
