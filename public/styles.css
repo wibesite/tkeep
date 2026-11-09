@@ -1711,7 +1711,7 @@ canvas {
 .plan-price {
   display: block;
   margin: 28px 0 25px;
-  font-size: clamp(31px, 3vw, 43px);
+  font-size: clamp(27px, 2.5vw, 36px);
   font-weight: 550;
   letter-spacing: -0.06em;
 }

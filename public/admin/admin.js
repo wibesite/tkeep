@@ -1,3 +1,5 @@
+import { formatMoney as formatAmount } from "/pricing.js?v=20261109-byn";
+
 const elements = {
   loginScreen: document.querySelector("#login-screen"),
   loginForm: document.querySelector("#login-form"),
@@ -68,6 +70,8 @@ const statusLabels = {
 
 const projectLabels = {
   start: "Сайт / AI",
+  landing: "Лендинг",
+  ai: "AI-ассистент",
   business: "Сайт + автоматизация",
   rag: "RAG / база знаний",
   voice: "Голосовой бот",
@@ -86,8 +90,9 @@ function showToast(message, icon = "✓") {
   toastTimer = setTimeout(() => elements.toast.classList.remove("show"), 3500);
 }
 
-function formatMoney(value) {
-  return Number.isFinite(Number(value)) ? `от $${new Intl.NumberFormat("en-US").format(Number(value))}` : "По смете";
+function formatMoney(value, currency = "USD") {
+  const amount = formatAmount(value, currency);
+  return amount === null ? "По смете" : `от ${amount}`;
 }
 
 function formatDate(value, includeTime = false) {
@@ -304,7 +309,7 @@ function renderLeads() {
     return `<tr data-id="${escapeHtml(lead.id)}" tabindex="0">
       <td><div class="client-cell"><span class="table-avatar">${escapeHtml((lead.name || "?").charAt(0))}</span><div><strong>${escapeHtml(lead.name)}</strong><small>${escapeHtml(lead.contact)}</small></div></div></td>
       <td><div class="task-cell"><strong>${escapeHtml(type)}</strong><small>${escapeHtml(task)}</small></div></td>
-      <td class="budget-cell">${escapeHtml(formatMoney(lead.estimate))}</td>
+      <td class="budget-cell">${escapeHtml(formatMoney(lead.estimate, lead.currency))}</td>
       <td class="date-cell">${escapeHtml(relativeDate(lead.createdAt))}</td>
       <td><span class="status-badge ${escapeHtml(lead.status)}">${escapeHtml(statusLabels[lead.status] || lead.status)}</span></td>
       <td><span class="row-arrow">→</span></td>
@@ -379,7 +384,7 @@ function openDrawer(lead) {
   elements.drawerName.textContent = lead.name;
   elements.drawerContact.textContent = lead.contact;
   elements.drawerCreated.textContent = formatDate(lead.createdAt, true);
-  elements.drawerEstimate.textContent = formatMoney(lead.estimate);
+  elements.drawerEstimate.textContent = formatMoney(lead.estimate, lead.currency);
   elements.drawerSource.textContent = lead.source || "—";
   elements.drawerCountry.textContent = lead.country || "—";
   elements.drawerTask.textContent = lead.task || "Описание задачи не добавлено.";

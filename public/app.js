@@ -1,22 +1,12 @@
+import { CURRENCY, prices, calculatePrice, formatMoney } from "/pricing.js?v=20261109-byn";
+
 document.documentElement.classList.add("js");
 
-const PRICE_DIVISOR = 3;
-const roundPrice = (reference) => Math.round(Number(reference) / PRICE_DIVISOR);
-const usd = (value) => `$${new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 }).format(value)}`;
-
-document.querySelectorAll("[data-reference-price]").forEach((element) => {
-  const value = roundPrice(element.dataset.referencePrice);
+document.querySelectorAll("[data-price]").forEach((element) => {
+  const value = prices[element.dataset.price];
+  const prefix = element.dataset.prefix ?? "от ";
   const suffix = element.dataset.suffix || "";
-  const isPriceOnly = Boolean(element.closest(".cloud-price"));
-  element.textContent = `${isPriceOnly ? "" : "от "}${usd(value)}${suffix}`;
-});
-
-document.querySelectorAll("[data-calc-reference]").forEach((element) => {
-  element.textContent = `от ${usd(roundPrice(element.dataset.calcReference))}`;
-});
-
-document.querySelectorAll("[data-extra-reference]").forEach((element) => {
-  element.textContent = `+${usd(roundPrice(element.dataset.extraReference))}`;
+  element.textContent = `${prefix}${formatMoney(value)}${suffix}`;
 });
 
 const header = document.querySelector("#site-header");
@@ -105,6 +95,12 @@ document.querySelectorAll("[data-service]").forEach((link) => {
   link.addEventListener("click", () => {
     const service = link.dataset.service;
     if (taskField && service) taskField.value = `Интересует: ${service}. `;
+    const projectType = link.dataset.projectType;
+    const input = projectType && calculator.querySelector(`input[name="projectType"][value="${projectType}"]`);
+    if (input) {
+      input.checked = true;
+      calculateEstimate();
+    }
   });
 });
 
@@ -181,31 +177,19 @@ document.querySelectorAll(".faq-item").forEach((item) => {
   });
 });
 
-const referencePrices = {
-  start: 200,
-  business: 1000,
-  rag: 450,
-  voice: 350,
-  bot: 100
-};
-const extraReferencePrices = { crm: 150, support: 300 };
 const calculator = document.querySelector(".calculator");
 const totalElement = document.querySelector("#calc-total");
 
 function calculateEstimate() {
   const selected = calculator.querySelector('input[name="projectType"]:checked')?.value;
-  if (selected === "custom") {
+  const extras = [...calculator.querySelectorAll('input[name="extras"]:checked')].map((input) => input.value);
+  const total = calculatePrice(selected, extras);
+  if (total === null) {
     totalElement.textContent = "по смете";
     return null;
   }
 
-  let total = roundPrice(referencePrices[selected] || 0);
-  calculator.querySelectorAll('input[name="extras"]:checked').forEach((input) => {
-    if (input.value === "urgent") total = Math.round(total * 1.2);
-    else total += roundPrice(extraReferencePrices[input.value] || 0);
-  });
-
-  totalElement.textContent = `от ${usd(total)}`;
+  totalElement.textContent = `от ${formatMoney(total)}`;
   totalElement.animate(
     [{ transform: "scale(1)" }, { transform: "scale(1.045)" }, { transform: "scale(1)" }],
     { duration: 320, easing: "ease-out" }
@@ -242,6 +226,7 @@ leadForm.addEventListener("submit", async (event) => {
     projectType: selectedType,
     extras,
     estimate: calculateEstimate(),
+    currency: CURRENCY,
     source: "tkeep.ru"
   };
 

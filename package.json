@@ -13,6 +13,7 @@
     "db:local": "wrangler d1 migrations apply tkeep-leads --local --config wrangler.local.toml",
     "db:remote": "wrangler d1 migrations apply tkeep-leads --remote",
     "test:admin": "node scripts/smoke-admin.mjs",
+    "test:pricing": "node --test scripts/pricing.test.mjs scripts/leads.test.mjs",
     "deploy": "wrangler d1 migrations apply tkeep-leads --remote && wrangler deploy",
     "check": "wrangler deploy --dry-run",
     "types": "wrangler types"

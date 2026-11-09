@@ -30,9 +30,10 @@ const create = await fetch(`${baseUrl}/api/leads`, {
     name: "Smoke Test",
     contact: "smoke@example.test",
     task: "Automated admin smoke test",
-    projectType: "start",
+    projectType: "landing",
     extras: ["crm"],
-    estimate: 117,
+    estimate: 250,
+    currency: "BYN",
     source: "smoke-test"
   })
 });
@@ -42,6 +43,8 @@ assert(create.status === 201 && created.leadId, `Lead creation failed: ${JSON.st
 const list = await fetch(`${baseUrl}/api/admin/leads?q=smoke%40example.test`, { headers: { cookie } });
 const listed = await list.json();
 assert(list.ok && listed.leads.some((lead) => lead.id === created.leadId), "Created lead is missing from admin list");
+const listedLead = listed.leads.find((lead) => lead.id === created.leadId);
+assert(listedLead.estimate === 250 && listedLead.currency === "BYN", "Lead estimate or currency was changed in storage");
 
 const update = await fetch(`${baseUrl}/api/admin/leads/${created.leadId}`, {
   method: "PATCH",
@@ -50,10 +53,12 @@ const update = await fetch(`${baseUrl}/api/admin/leads/${created.leadId}`, {
 });
 const updated = await update.json();
 assert(update.ok && updated.lead.status === "in_progress", `Lead update failed: ${JSON.stringify(updated)}`);
+assert(updated.lead.notes === "Smoke test note" && updated.lead.currency === "BYN", "Update did not retain notes and currency");
 
 const csv = await fetch(`${baseUrl}/api/admin/export`, { headers: { cookie } });
 const csvBody = await csv.text();
 assert(csv.ok && csvBody.includes("smoke@example.test"), "CSV export does not include the created lead");
+assert(csvBody.includes('"Валюта"') && csvBody.includes('"250","BYN"'), "CSV export is missing the BYN currency");
 
 const remove = await fetch(`${baseUrl}/api/admin/leads/${created.leadId}`, {
   method: "DELETE",
@@ -61,4 +66,4 @@ const remove = await fetch(`${baseUrl}/api/admin/leads/${created.leadId}`, {
 });
 assert(remove.ok, `Lead cleanup failed with ${remove.status}`);
 
-console.log("Admin smoke test passed: auth, D1, list, update, CSV and delete are working.");
+console.log("Admin smoke test passed: auth, D1, BYN estimate, list, update, CSV and delete are working.");

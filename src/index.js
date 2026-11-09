@@ -1,3 +1,5 @@
+import { formatMoney } from "../public/pricing.js";
+
 const ADMIN_STATUSES = new Set(["new", "in_progress", "won", "closed"]);
 const loginAttempts = new Map();
 
@@ -175,7 +177,8 @@ function requireDatabase(env) {
 async function sendToTelegram(env, lead) {
   if (!env.TELEGRAM_BOT_TOKEN || !env.TELEGRAM_CHAT_ID) return false;
   const extras = lead.extras.length ? lead.extras.join(", ") : "нет";
-  const estimate = Number.isFinite(lead.estimate) ? `от $${lead.estimate}` : "по смете";
+  const amount = formatMoney(lead.estimate, lead.currency);
+  const estimate = amount === null ? "по смете" : `от ${amount}`;
   const text = [
     "<b>Новая заявка TKEEP</b>",
     "",
@@ -215,8 +218,8 @@ async function storeLead(env, lead, request) {
   await env.DB.prepare(`
     INSERT INTO leads (
       id, created_at, updated_at, name, contact, task, project_type,
-      extras, estimate, source, status, notes, country, user_agent, referrer
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'new', '', ?, ?, ?)
+      extras, estimate, currency, source, status, notes, country, user_agent, referrer
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'new', '', ?, ?, ?)
   `).bind(
     lead.id,
     lead.createdAt,
@@ -227,6 +230,7 @@ async function storeLead(env, lead, request) {
     lead.projectType,
     JSON.stringify(lead.extras),
     lead.estimate,
+    lead.currency,
     lead.source,
     clean(request.cf?.country || request.headers.get("cf-ipcountry"), 8),
     clean(request.headers.get("user-agent"), 500),
@@ -246,7 +250,19 @@ async function handleLead(request, env) {
     return json({ ok: false, message: "Неверный формат данных" }, { status: 400 });
   }
 
+  if (!body || typeof body !== "object" || Array.isArray(body)) {
+    return json({ ok: false, message: "Неверный формат данных" }, { status: 400 });
+  }
   if (clean(body.company_website, 200)) return json({ ok: true, message: "Заявка отправлена" }, { status: 202 });
+
+  // Requests from the previously cached USD form did not include a currency.
+  const currency = body.currency === undefined ? "USD" : clean(body.currency, 8);
+  if (currency !== "USD" && currency !== "BYN") {
+    return json({ ok: false, message: "Неподдерживаемая валюта оценки" }, { status: 422 });
+  }
+  const estimate = body.estimate === null || body.estimate === undefined || body.estimate === ""
+    ? null
+    : Number(body.estimate);
 
   const lead = {
     id: crypto.randomUUID(),
@@ -256,7 +272,8 @@ async function handleLead(request, env) {
     task: clean(body.task, 2_000),
     projectType: clean(body.projectType, 40),
     extras: Array.isArray(body.extras) ? body.extras.map((item) => clean(item, 30)).slice(0, 8) : [],
-    estimate: Number.isFinite(Number(body.estimate)) ? Number(body.estimate) : null,
+    estimate: Number.isFinite(estimate) && estimate >= 0 ? estimate : null,
+    currency,
     source: clean(body.source, 80) || "tkeep.ru"
   };
 
@@ -309,6 +326,7 @@ function mapLead(row) {
     projectType: row.project_type || "",
     extras,
     estimate: row.estimate,
+    currency: row.currency || "USD",
     source: row.source || "",
     status: row.status,
     notes: row.notes || "",
@@ -340,7 +358,7 @@ async function listLeads(request, env) {
 
   const rowsStatement = env.DB.prepare(`
     SELECT id, created_at, updated_at, name, contact, task, project_type, extras,
-           estimate, source, status, notes, country, updated_by
+           estimate, currency, source, status, notes, country, updated_by
     FROM leads ${whereSql}
     ORDER BY created_at DESC LIMIT ? OFFSET ?
   `).bind(...params, limit, offset);
@@ -372,7 +390,7 @@ async function listLeads(request, env) {
 async function getLead(env, id) {
   return env.DB.prepare(`
     SELECT id, created_at, updated_at, name, contact, task, project_type, extras,
-           estimate, source, status, notes, country, updated_by
+           estimate, currency, source, status, notes, country, updated_by
     FROM leads WHERE id = ?
   `).bind(id).first();
 }
@@ -414,18 +432,18 @@ function csvCell(value) {
 
 async function exportLeads(env) {
   const result = await env.DB.prepare(`
-    SELECT created_at, name, contact, task, project_type, extras, estimate,
+    SELECT created_at, name, contact, task, project_type, extras, estimate, currency,
            status, notes, source, country, updated_at, updated_by
     FROM leads ORDER BY created_at DESC LIMIT 10000
   `).all();
-  const headers = ["Дата", "Имя", "Контакт", "Задача", "Тип", "Опции", "Оценка USD", "Статус", "Заметки", "Источник", "Страна", "Обновлено", "Кем обновлено"];
+  const headers = ["Дата", "Имя", "Контакт", "Задача", "Тип", "Опции", "Оценка", "Валюта", "Статус", "Заметки", "Источник", "Страна", "Обновлено", "Кем обновлено"];
   const lines = [headers.map(csvCell).join(",")];
   for (const row of result.results || []) {
     let extras = row.extras || "";
     try { extras = JSON.parse(extras).join("; "); } catch { /* keep raw value */ }
     lines.push([
       row.created_at, row.name, row.contact, row.task, row.project_type, extras,
-      row.estimate, row.status, row.notes, row.source, row.country, row.updated_at, row.updated_by
+      row.estimate, row.currency || "USD", row.status, row.notes, row.source, row.country, row.updated_at, row.updated_by
     ].map(csvCell).join(","));
   }
   return new Response(`\uFEFF${lines.join("\r\n")}`, {
