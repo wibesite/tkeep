@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920">
+  <defs>
+    <linearGradient id="grad4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#111411;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1b201b;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow4" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="26" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <rect width="1080" height="1920" fill="url(#grad4)" />
+  <circle cx="880" cy="420" r="280" fill="#83a977" opacity="0.10" filter="url(#glow4)" />
+  <circle cx="240" cy="1580" r="360" fill="#d8e2b6" opacity="0.07" filter="url(#glow4)" />
+
+  <rect x="0" y="0" width="1080" height="200" fill="#000000" opacity="0.30" />
+  <rect x="0" y="1720" width="1080" height="200" fill="#000000" opacity="0.30" />
+
+  <text x="60" y="120" font-family="Inter, sans-serif" font-size="42" font-weight="800" fill="#ffffff" letter-spacing="-0.02em">TKEEP<span fill="#83a977">.</span></text>
+
+  <text x="60" y="520" font-family="Inter, sans-serif" font-size="76" font-weight="900" fill="#ffffff" line-height="1.05" letter-spacing="-0.03em">
+    Интернет-магазин от
+  </text>
+  <text x="60" y="620" font-family="Inter, sans-serif" font-size="76" font-weight="900" fill="#d8e2b6" line-height="1.05" letter-spacing="-0.03em">
+    1 000 BYN.
+  </text>
+
+  <text x="60" y="710" font-family="Inter, sans-serif" font-size="32" font-weight="500" fill="#b9ca83" line-height="1.4">
+    Каталог, корзина, оплата, доставка — первые заказы уже через неделю после запуска.
+  </text>
+
+  <rect x="60" y="820" width="960" height="340" rx="32" fill="#1b201b" stroke="#83a977" stroke-width="2" />
+  <text x="120" y="900" font-family="Inter, sans-serif" font-size="36" font-weight="700" fill="#ffffff">Цена</text>
+  <text x="120" y="980" font-family="Inter, sans-serif" font-size="108" font-weight="900" fill="#d8e2b6" letter-spacing="-0.04em">от 1 000</text>
+  <text x="720" y="980" font-family="Inter, sans-serif" font-size="46" font-weight="700" fill="#b9ca83">BYN</text>
+
+  <line x1="120" y1="1060" x2="900" y2="1060" stroke="#333a32" stroke-width="1" />
+
+  <text x="120" y="1130" font-family="Inter, sans-serif" font-size="30" font-weight="700" fill="#ffffff">Что входит:</text>
+  <text x="120" y="1180" font-family="Inter, sans-serif" font-size="26" font-weight="400" fill="#b9ca83">• Каталог и фильтры</text>
+  <text x="120" y="1230" font-family="Inter, sans-serif" font-size="26" font-weight="400" fill="#b9ca83">• Корзина и оплата</text>
+  <text x="120" y="1280" font-family="Inter, sans-serif" font-size="26" font-weight="400" fill="#b9ca83">• Интеграция с учётной системой</text>
+
+  <rect x="60" y="1420" width="960" height="140" rx="22" fill="#83a977" />
+  <text x="160" y="1510" font-family="Inter, sans-serif" font-size="40" font-weight="800" fill="#111411">Открыть магазин →</text>
+  <text x="700" y="1510" font-family="Inter, sans-serif" font-size="32" font-weight="600" fill="#111411">t.me/tkeepru</text>
+
+  <text x="60" y="1820" font-family="Inter, sans-serif" font-size="24" font-weight="600" fill="#8a9289">hello@tkeep.ru</text>
+  <text x="560" y="1820" font-family="Inter, sans-serif" font-size="24" font-weight="600" fill="#8a9289">tkeep.ru</text>
+  <text x="860" y="1820" font-family="Inter, sans-serif" font-size="24" font-weight="600" fill="#8a9289">Ссылка в био</text>
+</svg>
